@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcssch="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.20">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<Events>
+		<Event name="AfterWriteAtServer">ПослеЗаписиНаСервере</Event>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="OnReopen">ПриПовторномОткрытии</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="Код" id="1">
+			<DataPath>Объект.Code</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="КодКонтекстноеМеню" id="2"/>
+			<ExtendedTooltip name="КодРасширеннаяПодсказка" id="3"/>
+		</InputField>
+		<InputField name="Наименование" id="4">
+			<DataPath>Объект.Description</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="НаименованиеКонтекстноеМеню" id="5"/>
+			<ExtendedTooltip name="НаименованиеРасширеннаяПодсказка" id="6"/>
+		</InputField>
+		<InputField name="Курс" id="7">
+			<DataPath>Объект.Курс</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="КурсКонтекстноеМеню" id="8"/>
+			<ExtendedTooltip name="КурсРасширеннаяПодсказка" id="9"/>
+		</InputField>
+		<InputField name="ДатаЗачетаЭкзамена" id="10">
+			<DataPath>Объект.ДатаЗачетаЭкзамена</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="ДатаЗачетаЭкзаменаКонтекстноеМеню" id="11"/>
+			<ExtendedTooltip name="ДатаЗачетаЭкзаменаРасширеннаяПодсказка" id="12"/>
+		</InputField>
+		<InputField name="ДатаКурсовой" id="13">
+			<DataPath>Объект.ДатаКурсовой</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="ДатаКурсовойКонтекстноеМеню" id="14"/>
+			<ExtendedTooltip name="ДатаКурсовойРасширеннаяПодсказка" id="15"/>
+		</InputField>
+		<Table name="ЧасыИтоговые" id="16">
+			<Representation>List</Representation>
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<DataPath>Объект.ЧасыИтоговые</DataPath>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ЧасыИтоговыеКонтекстноеМеню" id="17"/>
+			<AutoCommandBar name="ЧасыИтоговыеКоманднаяПанель" id="18"/>
+			<ExtendedTooltip name="ЧасыИтоговыеРасширеннаяПодсказка" id="19"/>
+			<SearchStringAddition name="ЧасыИтоговыеСтрокаПоиска" id="20">
+				<AdditionSource>
+					<Item>ЧасыИтоговые</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ЧасыИтоговыеСтрокаПоискаКонтекстноеМеню" id="21"/>
+				<ExtendedTooltip name="ЧасыИтоговыеСтрокаПоискаРасширеннаяПодсказка" id="22"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ЧасыИтоговыеСостояниеПросмотра" id="23">
+				<AdditionSource>
+					<Item>ЧасыИтоговые</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ЧасыИтоговыеСостояниеПросмотраКонтекстноеМеню" id="24"/>
+				<ExtendedTooltip name="ЧасыИтоговыеСостояниеПросмотраРасширеннаяПодсказка" id="25"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ЧасыИтоговыеУправлениеПоиском" id="26">
+				<AdditionSource>
+					<Item>ЧасыИтоговые</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ЧасыИтоговыеУправлениеПоискомКонтекстноеМеню" id="27"/>
+				<ExtendedTooltip name="ЧасыИтоговыеУправлениеПоискомРасширеннаяПодсказка" id="28"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<LabelField name="ЧасыИтоговыеНомерСтроки" id="29">
+					<DataPath>Объект.ЧасыИтоговые.LineNumber</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ЧасыИтоговыеНомерСтрокиКонтекстноеМеню" id="30"/>
+					<ExtendedTooltip name="ЧасыИтоговыеНомерСтрокиРасширеннаяПодсказка" id="31"/>
+				</LabelField>
+				<InputField name="ЧасыИтоговыеДатаНачала" id="32">
+					<DataPath>Объект.ЧасыИтоговые.ДатаНачала</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ЧасыИтоговыеДатаНачалаКонтекстноеМеню" id="33"/>
+					<ExtendedTooltip name="ЧасыИтоговыеДатаНачалаРасширеннаяПодсказка" id="34"/>
+				</InputField>
+				<InputField name="ЧасыИтоговыеСколькоЧасов" id="35">
+					<DataPath>Объект.ЧасыИтоговые.СколькоЧасов</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ЧасыИтоговыеСколькоЧасовКонтекстноеМеню" id="36"/>
+					<ExtendedTooltip name="ЧасыИтоговыеСколькоЧасовРасширеннаяПодсказка" id="37"/>
+				</InputField>
+				<InputField name="ЧасыИтоговыеНаЧтоЗапланированыЧасы" id="38">
+					<DataPath>Объект.ЧасыИтоговые.НаЧтоЗапланированыЧасы</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ЧасыИтоговыеНаЧтоЗапланированыЧасыКонтекстноеМеню" id="39"/>
+					<ExtendedTooltip name="ЧасыИтоговыеНаЧтоЗапланированыЧасыРасширеннаяПодсказка" id="40"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:CatalogObject.Группы</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+	</Attributes>
+</Form>

@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcssch="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.20">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<Autofill>false</Autofill>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnOpen">ПриОткрытии</Event>
+	</Events>
+	<ChildItems>
+		<Table name="ЭкспортныеСценарии" id="1">
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<DataPath>Объект.ЭкспортныеСценарии</DataPath>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ЭкспортныеСценарииКонтекстноеМеню" id="2"/>
+			<AutoCommandBar name="ЭкспортныеСценарииКоманднаяПанель" id="3">
+				<Autofill>false</Autofill>
+				<ChildItems>
+					<Button name="ЭкспортныеСценарииОбработкаПолучениеШаговПолучитьДанные" id="29">
+						<Type>CommandBarButton</Type>
+						<UserVisible>
+							<xr:Common>true</xr:Common>
+							<xr:Value name="Role.ПолныеПрава">false</xr:Value>
+						</UserVisible>
+						<CommandName>DataProcessor.ПолучениеШагов.Command.ПолучитьДанные</CommandName>
+						<ExtendedTooltip name="ЭкспортныеСценарииОбработкаПолучениеШаговПолучитьДанныеРасширеннаяПодсказка" id="30"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
+			<ExtendedTooltip name="ЭкспортныеСценарииРасширеннаяПодсказка" id="4"/>
+			<SearchStringAddition name="ЭкспортныеСценарииСтрокаПоиска" id="5">
+				<AdditionSource>
+					<Item>ЭкспортныеСценарии</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ЭкспортныеСценарииСтрокаПоискаКонтекстноеМеню" id="6"/>
+				<ExtendedTooltip name="ЭкспортныеСценарииСтрокаПоискаРасширеннаяПодсказка" id="7"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ЭкспортныеСценарииСостояниеПросмотра" id="8">
+				<AdditionSource>
+					<Item>ЭкспортныеСценарии</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ЭкспортныеСценарииСостояниеПросмотраКонтекстноеМеню" id="9"/>
+				<ExtendedTooltip name="ЭкспортныеСценарииСостояниеПросмотраРасширеннаяПодсказка" id="10"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ЭкспортныеСценарииУправлениеПоиском" id="11">
+				<AdditionSource>
+					<Item>ЭкспортныеСценарии</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ЭкспортныеСценарииУправлениеПоискомКонтекстноеМеню" id="12"/>
+				<ExtendedTooltip name="ЭкспортныеСценарииУправлениеПоискомРасширеннаяПодсказка" id="13"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<LabelField name="ЭкспортныеСценарииНомерСтроки" id="14">
+					<DataPath>Объект.ЭкспортныеСценарии.LineNumber</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ЭкспортныеСценарииНомерСтрокиКонтекстноеМеню" id="15"/>
+					<ExtendedTooltip name="ЭкспортныеСценарииНомерСтрокиРасширеннаяПодсказка" id="16"/>
+				</LabelField>
+				<InputField name="ЭкспортныеСценарииСценарий" id="17">
+					<DataPath>Объект.ЭкспортныеСценарии.Сценарий</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ExtendedEditMultipleValues>true</ExtendedEditMultipleValues>
+					<ContextMenu name="ЭкспортныеСценарииСценарийКонтекстноеМеню" id="18"/>
+					<ExtendedTooltip name="ЭкспортныеСценарииСценарийРасширеннаяПодсказка" id="19"/>
+				</InputField>
+				<InputField name="ЭкспортныеСценарииОписание" id="20">
+					<DataPath>Объект.ЭкспортныеСценарии.Описание</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ExtendedEditMultipleValues>true</ExtendedEditMultipleValues>
+					<ContextMenu name="ЭкспортныеСценарииОписаниеКонтекстноеМеню" id="21"/>
+					<ExtendedTooltip name="ЭкспортныеСценарииОписаниеРасширеннаяПодсказка" id="22"/>
+				</InputField>
+				<InputField name="ЭкспортныеСценарииПутьКФайлу" id="23">
+					<DataPath>Объект.ЭкспортныеСценарии.ПутьКФайлу</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ExtendedEditMultipleValues>true</ExtendedEditMultipleValues>
+					<ContextMenu name="ЭкспортныеСценарииПутьКФайлуКонтекстноеМеню" id="24"/>
+					<ExtendedTooltip name="ЭкспортныеСценарииПутьКФайлуРасширеннаяПодсказка" id="25"/>
+				</InputField>
+				<InputField name="ЭкспортныеСценарииАвтор" id="26">
+					<DataPath>Объект.ЭкспортныеСценарии.Автор</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ExtendedEditMultipleValues>true</ExtendedEditMultipleValues>
+					<ContextMenu name="ЭкспортныеСценарииАвторКонтекстноеМеню" id="27"/>
+					<ExtendedTooltip name="ЭкспортныеСценарииАвторРасширеннаяПодсказка" id="28"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:DataProcessorObject.ПолучениеШагов</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+	</Attributes>
+</Form>

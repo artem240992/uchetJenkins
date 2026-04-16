@@ -18,7 +18,7 @@ pipeline {
                 bat '''
                     "C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe" DESIGNER ^
                         /F "%WORKSPACE%\\build\\ib" ^
-                        /N "Журавель АЮ" ^
+                        /N "Тестовый" ^
                         /P "123" ^
                         /RunModeOrdinary ^
                         /Out "%WORKSPACE%\\build.log" -FormatTXT ^

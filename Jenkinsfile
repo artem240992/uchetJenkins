@@ -1,55 +1,46 @@
-// // @Library('jenkins-lib')_
-// // buildPipeline('tools/pipeline/jobConfiguration.json')
-// @Library('usher2') _
-// buildPipeline('tools/pipeline/jobConfiguration.json')
-// pipeline1C()
-// pipeline {
-//     agent any
-//     stages {
-//         stage('Run 1C Check') {
-//             options {
-//                 timeout(time: 1, unit: 'HOURS')
-//             }
-//             steps {
-
-//                     stages {
-//                         stage('Prepare') {
-//                             steps {
-//                                 bat 'if not exist build\\ib mkdir build\\ib'
-//                             }
-//                         }
-//                         stage('Run 1C Check') {
-//                             steps {
-//                                 bat '"C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe" DESIGNER /F build\\ib /N "Admin" /P "" /RunModeOrdinary /Out build.log -FormatTXT /Execute "tools\\check.os"'
-//                             }
-//                         }
-//                     }
-
-//                     post {
-//                         always {
-//                             archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
-//                         }
-//                     }
-//                 }
-//                 }
-//                 }
-//                 }
-
 pipeline {
     agent any
+
+    options {
+        timeout(time: 1, unit: 'HOURS')
+    }
+
     stages {
-        stage('Run 1C Check') {
-            options {
-                timeout(time: 1, unit: 'HOURS')
-            }
+        stage('Prepare') {
             steps {
-                bat '"C:\\Program Files\\1cv8\\8.3.22.1750\\bin\\1cv8.exe" DESIGNER /F build\\ib /N "Admin" /P "" /RunModeOrdinary /Out build.log -FormatTXT /Execute "tools\\check.os"'
+                bat 'echo Current directory: %CD%'
+                bat 'if not exist build\\ib mkdir build\\ib'
+                bat 'if exist tools\\check.os (echo check.os found) else (echo ERROR: tools/check.os not found & exit 1)'
+            }
+        }
+        stage('Run 1C Check') {
+            steps {
+                bat '''
+                    "C:\\Program Files\\1cv8\\8.3.22.1750\\bin\\1cv8.exe" DESIGNER ^
+                        /F "%WORKSPACE%\\build\\ib" ^
+                        /RunModeOrdinary ^
+                        /Out "%WORKSPACE%\\build.log" -FormatTXT ^
+                        /Execute "%WORKSPACE%\\tools\\check.os"
+             
+                '''
             }
         }
     }
+
     post {
         always {
             archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
+            // Сохраняем лог даже при ошибке
+            script {
+                if (fileExists('build.log')) {
+                    echo '=== Содержимое build.log ==='
+                    readFile('build.log').eachLine { line ->
+                        echo line
+                    }
+                } else {
+                    echo 'build.log не создан'
+                }
+            }
         }
     }
 }

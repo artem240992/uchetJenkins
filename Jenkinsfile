@@ -1,3 +1,3 @@
-@Library('jenkins-lib') 
-buildPipeline('tools/pipeline/jobConfiguration.json')_
+@Library('jenkins-lib')_
+buildPipeline('tools/pipeline/jobConfiguration.json')
 pipeline1C()

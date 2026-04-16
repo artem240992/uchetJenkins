@@ -16,7 +16,7 @@ pipeline {
         stage('Run 1C Check') {
             steps {
                 bat '''
-                    "C:\\Program Files\\1cv8\\8.3.22.1750\\bin\\1cv8.exe" DESIGNER ^
+                    "C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe" DESIGNER ^
                         /F "%WORKSPACE%\\build\\ib" ^
                         /RunModeOrdinary ^
                         /Out "%WORKSPACE%\\build.log" -FormatTXT ^

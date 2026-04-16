@@ -1,0 +1,8 @@
+{
+  "$schema": "https://raw.githubusercontent.com/firstBitSemenovskaya/jenkins-lib/master/resources/schema.json",
+  "v8version": "8.3.27.1786", // Укажите вашу версию платформы 1С
+  "stages": {
+    "syntaxCheck": true,       // Включить синтаксис-контроль
+    "runTests": false          // Пока отключим тесты
+  }
+}

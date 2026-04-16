@@ -3,22 +3,50 @@
 // @Library('usher2') _
 // buildPipeline('tools/pipeline/jobConfiguration.json')
 // pipeline1C()
+// pipeline {
+//     agent any
+//     stages {
+//         stage('Run 1C Check') {
+//             options {
+//                 timeout(time: 1, unit: 'HOURS')
+//             }
+//             steps {
+
+//                     stages {
+//                         stage('Prepare') {
+//                             steps {
+//                                 bat 'if not exist build\\ib mkdir build\\ib'
+//                             }
+//                         }
+//                         stage('Run 1C Check') {
+//                             steps {
+//                                 bat '"C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe" DESIGNER /F build\\ib /N "Admin" /P "" /RunModeOrdinary /Out build.log -FormatTXT /Execute "tools\\check.os"'
+//                             }
+//                         }
+//                     }
+
+//                     post {
+//                         always {
+//                             archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
+//                         }
+//                     }
+//                 }
+//                 }
+//                 }
+//                 }
+
 pipeline {
     agent any
-
     stages {
-        stage('Prepare') {
-            steps {
-                bat 'if not exist build\\ib mkdir build\\ib'
-            }
-        }
         stage('Run 1C Check') {
+            options {
+                timeout(time: 1, unit: 'HOURS')
+            }
             steps {
-                bat '"C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe" DESIGNER /F build\\ib /N "Admin" /P "" /RunModeOrdinary /Out build.log -FormatTXT /Execute "tools\\check.os"'
+                bat '"C:\\Program Files\\1cv8\\8.3.22.1750\\bin\\1cv8.exe" DESIGNER /F build\\ib /N "Admin" /P "" /RunModeOrdinary /Out build.log -FormatTXT /Execute "tools\\check.os"'
             }
         }
     }
-
     post {
         always {
             archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true

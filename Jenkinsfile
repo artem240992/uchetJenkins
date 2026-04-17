@@ -1,45 +1,21 @@
 pipeline {
     agent any
-
-    environment {
-        V8_PATH = "C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe"
-    }
-
     stages {
-        stage('Очистка') {
+        stage('Установка зависимостей') {
             steps {
-                bat 'if exist build\\ib rmdir /s /q build\\ib'
-                bat 'mkdir build\\ib'
+                bat 'oscript -version' // проверка наличия OneScript
             }
         }
-
-        stage('Создание ИБ') {
-            options { timeout(time: 5, unit: 'MINUTES') }
+        stage('Создание базы через Vanessa') {
             steps {
-                bat "\"${env.V8_PATH}\" CREATE INFOBASE /F \"%WORKSPACE%\\build\\ib\" /DisableStartupMessages /AddInList /NoTruncate /Out \"%WORKSPACE%\\create_ib.log\""
-                bat 'if not exist build\\ib\\1Cv8.1CD exit /b 1'
+                bat 'vanessa-runner create-infobase --path ./build/ib'
+                bat 'vanessa-runner load-config --path ./build/ib --src ./src'
             }
         }
-
-        stage('Загрузка конфигурации') {
-            steps {
-                bat "\"${env.V8_PATH}\" DESIGNER /F \"%WORKSPACE%\\build\\ib\" /LoadConfigFromFiles \"%WORKSPACE%\\src\" /UpdateDBCfg /Out \"%WORKSPACE%\\load.log\""
-            }
-        }
-
         stage('Проверка') {
             steps {
-                bat "\"${env.V8_PATH}\" DESIGNER /F \"%WORKSPACE%\\build\\ib\" /CheckConfig -ThinClient -Server -ExternalConnection /Out \"%WORKSPACE%\\check.log\""
+                bat 'vanessa-runner run-tests --path ./build/ib'
             }
-        }
-    }
-
-    post {
-        always {
-            archiveArtifacts artifacts: '*.log, build\\ib\\*.cfl', allowEmptyArchive: true
-        }
-        failure {
-            echo 'Ошибка сборки. Логи сохранены.'
         }
     }
 }

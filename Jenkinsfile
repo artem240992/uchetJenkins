@@ -1,2 +1,2 @@
 @Library('jenkins-lib') _
-buildPipeline()
+pipeline1C()

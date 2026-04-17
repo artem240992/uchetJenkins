@@ -57,16 +57,16 @@ pipeline {
             }
         }
 
-        stage('Автотесты (Vanessa Automation)') {
-            options { timeout(time: 15, unit: 'MINUTES') }
-            steps {
-                bat '''
-                    chcp 65001
-                    "%WORKSPACE%\\tools\\vrunner.exe" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
-                '''
-            }
-        }
-    }  // <-- Закрывающая скобка для stages (была пропущена)
+    //     stage('Автотесты (Vanessa Automation)') {
+    //         options { timeout(time: 15, unit: 'MINUTES') }
+    //         steps {
+    //             bat '''
+    //                 chcp 65001
+    //                 "%WORKSPACE%\\tools\\vrunner.exe" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
+    //             '''
+    //         }
+    //     }
+    // }  // <-- Закрывающая скобка для stages (была пропущена)
 
     post {
         always {

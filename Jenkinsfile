@@ -7,11 +7,30 @@ pipeline {
 
     environment {
         V8_PATH = "C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe"
-        EMPTY_IB = "C:\\empty_ib"   // путь к пустой базе-шаблону
+        EMPTY_IB = "C:\\empty_ib"
     }
 
     stages {
-        // ... (ваши существующие этапы: Очистка, Копирование базы-шаблона, Проверка наличия файлов) ...
+        stage('Очистка') {
+            steps {
+                bat 'if exist build\\ib rmdir /s /q build\\ib'
+                bat 'mkdir build\\ib'
+            }
+        }
+
+        stage('Копирование базы-шаблона') {
+            options { timeout(time: 2, unit: 'MINUTES') }
+            steps {
+                bat "xcopy /E /I /Y \"${env.EMPTY_IB}\" \"%WORKSPACE%\\build\\ib\""
+            }
+        }
+
+        stage('Проверка наличия файлов конфигурации') {
+            steps {
+                bat 'if exist src\\Configuration.xml (echo OK) else (echo ERROR: src\\Configuration.xml not found && exit /b 1)'
+            }
+        }
+
         stage('Загрузка конфигурации') {
             options { timeout(time: 10, unit: 'MINUTES') }
             steps {
@@ -19,39 +38,27 @@ pipeline {
             }
         }
 
-        // НОВЫЙ ЭТАП: Запуск автотестов
-        stage('Автотесты (Vanessa Automation)') {
-            options { timeout(time: 15, unit: 'MINUTES') } // Увеличьте, если тестов много
+        stage('Проверка наличия тестов') {
             steps {
-                bat """
-                    vanessa-runner run \
-                        --ibconnection /F"%WORKSPACE%\\build\\ib" \
-                        --vanessa "./tools/vanessa-automation.epf" \
-                        --path "./features" \
-                        --report-path "./reports"
-                """
+                bat 'if not exist tools\\vanessa-automation.epf (echo ERROR: vanessa-automation.epf not found && exit /b 1)'
+                bat 'if not exist features (echo ERROR: features folder not found && exit /b 1)'
             }
         }
-        // ---------------------------------------------
 
-        // stage('Проверка конфигурации') { ... } // Этот этап можно оставить или убрать, если тесты покрывают все проверки
+        stage('Автотесты (Vanessa Automation)') {
+            options { timeout(time: 15, unit: 'MINUTES') }
+            steps {
+                bat "vanessa-runner run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
+            }
+        }
     }
 
     post {
         always {
-            // Архивируем отчёты о тестах
             archiveArtifacts artifacts: '*.log, reports/*.json, reports/*.xml, build\\ib\\*.cfl', allowEmptyArchive: true
-            publishHTML([ // Публикуем отчёт в Jenkins
-                allowMissing: true,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'reports',
-                reportFiles: 'index.html',
-                reportName: 'Vanessa Automation Report'
-            ])
         }
         failure {
-            echo 'Сборка не удалась. Проверьте логи тестов.'
+            echo 'Сборка не удалась. Логи и отчёты сохранены в архиве.'
         }
     }
 }

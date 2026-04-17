@@ -4,14 +4,33 @@ pipeline {
     options {
         timeout(time: 30, unit: 'MINUTES')
     }
-
     environment {
         V8_PATH = "C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe"
         EMPTY_IB = "C:\\empty_ib"
         VRUNNER = "C:\\Program Files\\OneScript\\bin\\vrunner.bat"
     }
-
     stages {
+        stage('Checkout') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    extensions: [[
+                        $class: 'SubmoduleOption',
+                        disableSubmodules: false,
+                        parentCredentials: true,
+                        recursiveSubmodules: true,
+                        reference: '',
+                        trackingSubmodules: false
+                    ]],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/artem240992/uchetJenkins',
+                        credentialsId: 'd3c27826-bab6-4b11-a02b-834a742b8601'
+                    ]]
+                ])
+            ]
+        }
+
         stage('Очистка') {
             steps {
                 bat 'if exist build\\ib rmdir /s /q build\\ib'
@@ -41,11 +60,14 @@ pipeline {
         }
 
         stage('Автотесты (Vanessa Automation)') {
-    options { timeout(time: 15, unit: 'MINUTES') }
-    steps {
-        bat "oscript \"%WORKSPACE%\\tools\\vanessa-runner\\tools\\runner.os\" run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
+            options { timeout(time: 15, unit: 'MINUTES') }
+            steps {
+                bat '''
+                    chcp 65001
+                    "C:\\Program Files\\OneScript\\bin\\vrunner.bat" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
+                '''
             }
-        }  
+        }
     }
 
     post {

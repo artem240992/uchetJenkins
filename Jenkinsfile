@@ -8,6 +8,7 @@ pipeline {
     environment {
         V8_PATH = "C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe"
         EMPTY_IB = "C:\\empty_ib"
+        VRUNNER = "C:\\Program Files\\OneScript\\bin\\vrunner.bat"
     }
 
     stages {
@@ -32,18 +33,24 @@ pipeline {
             }
         }
 
+        stage('Проверка наличия тестов') {
+            steps {
+                bat 'if not exist tools\\vanessa-automation.epf (echo ERROR: vanessa-automation.epf not found && exit /b 1)'
+                bat 'if not exist features (echo ERROR: features folder not found && exit /b 1)'
+            }
+        }
+
         stage('Автотесты (Vanessa Automation)') {
             options { timeout(time: 15, unit: 'MINUTES') }
             steps {
-                // Прямой вызов runner.os через oscript (без vanessa-runner.bat)
-                bat "oscript \"C:\\Program Files\\OneScript\\lib\\vanessa-runner\\src\\runner.os\" run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
+                // Вызов vrunner.bat с правильным экранированием
+                bat "\"${env.VRUNNER}\" run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
             }
         }
     }
 
     post {
         always {
-            // Архивируем все логи и отчёты (HTML Publisher не используется)
             archiveArtifacts artifacts: '*.log, reports/**/*, build\\ib\\*.cfl', allowEmptyArchive: true
         }
         failure {

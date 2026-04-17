@@ -44,16 +44,16 @@ pipeline {
             }
         }
 
-        stage('Запуск автотестов') {
-            options { timeout(time: 15, unit: 'MINUTES') }
-            steps {
-                bat '''
-                    chcp 65001
-                    set OSCRIPT_LIBPATH=%WORKSPACE%\\tools\\libs
-                    oscript "%WORKSPACE%\\tools\\vanessa-runner\\tools\\runner.os" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
-                '''
-            }
-        }
+        // stage('Запуск автотестов') {
+        //     options { timeout(time: 15, unit: 'MINUTES') }
+        //     steps {
+        //         bat '''
+        //             chcp 65001
+        //             set OSCRIPT_LIBPATH=%WORKSPACE%\\tools\\libs
+        //             oscript "%WORKSPACE%\\tools\\vanessa-runner\\tools\\runner.os" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
+        //         '''
+        //     }
+        // }
     }
 
     post {

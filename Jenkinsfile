@@ -59,13 +59,14 @@ pipeline {
         }
 
         stage('Автотесты (Vanessa Automation)') {
-            options { timeout(time: 15, unit: 'MINUTES') }
-            steps {
-                bat '''
-                    chcp 65001
-                    oscript "%WORKSPACE%\\tools\\vanessa-runner\\tools\\runner.os" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
-                '''
-            }
+    options { timeout(time: 15, unit: 'MINUTES') }
+    steps {
+        bat '''
+            chcp 65001
+            set OSCRIPT_LIBPATH=C:\\Program Files\\OneScript\\lib\\cmdline\\src
+            oscript "%WORKSPACE%\\tools\\vanessa-runner\\tools\\runner.os" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
+        '''
+    }
         }
     }
 

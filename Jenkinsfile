@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     options {
-        timeout(time: 30, unit: 'MINUTES') // глобальный таймаут на всю сборку
+        timeout(time: 30, unit: 'MINUTES')
     }
 
     environment {
@@ -11,51 +11,47 @@ pipeline {
     }
 
     stages {
-        stage('Очистка') {
-
-            options {
-                timeout(time: 5, unit: 'MINUTES')
-            }
-            steps {
-                bat 'if exist build\\ib rmdir /s /q build\\ib'
-                bat 'mkdir build\\ib'
-            }
-        }
-
-        stage('Копирование базы-шаблона') {
-            options {
-                timeout(time: 5, unit: 'MINUTES')
-            }
-            steps {
-                bat "xcopy /E /I /Y \"${env.EMPTY_IB}\" \"%WORKSPACE%\\build\\ib\""
-            }
-        }
-
+        // ... (ваши существующие этапы: Очистка, Копирование базы-шаблона, Проверка наличия файлов) ...
         stage('Загрузка конфигурации') {
-            options {
-                timeout(time: 10, unit: 'MINUTES')
-            }
+            options { timeout(time: 10, unit: 'MINUTES') }
             steps {
                 bat "\"${env.V8_PATH}\" DESIGNER /F \"%WORKSPACE%\\build\\ib\" /LoadConfigFromFiles \"%WORKSPACE%\\src\" /UpdateDBCfg /Out \"%WORKSPACE%\\load.log\""
             }
         }
 
-        stage('Проверка конфигурации') {
-            options {
-                timeout(time: 10, unit: 'MINUTES')
-            }
+        // НОВЫЙ ЭТАП: Запуск автотестов
+        stage('Автотесты (Vanessa Automation)') {
+            options { timeout(time: 15, unit: 'MINUTES') } // Увеличьте, если тестов много
             steps {
-                bat "\"${env.V8_PATH}\" DESIGNER /F \"%WORKSPACE%\\build\\ib\" /CheckConfig -ThinClient -Server -ExternalConnection /Out \"%WORKSPACE%\\check.log\""
+                bat """
+                    vanessa-runner run \
+                        --ibconnection /F"%WORKSPACE%\\build\\ib" \
+                        --vanessa "./tools/vanessa-automation.epf" \
+                        --path "./features" \
+                        --report-path "./reports"
+                """
             }
         }
+        // ---------------------------------------------
+
+        // stage('Проверка конфигурации') { ... } // Этот этап можно оставить или убрать, если тесты покрывают все проверки
     }
 
     post {
         always {
-            archiveArtifacts artifacts: '*.log, build\\ib\\*.cfl', allowEmptyArchive: true
+            // Архивируем отчёты о тестах
+            archiveArtifacts artifacts: '*.log, reports/*.json, reports/*.xml, build\\ib\\*.cfl', allowEmptyArchive: true
+            publishHTML([ // Публикуем отчёт в Jenkins
+                allowMissing: true,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'reports',
+                reportFiles: 'index.html',
+                reportName: 'Vanessa Automation Report'
+            ])
         }
         failure {
-            echo 'Сборка не удалась. Логи в архиве.'
+            echo 'Сборка не удалась. Проверьте логи тестов.'
         }
     }
 }

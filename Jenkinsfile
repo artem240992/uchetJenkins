@@ -25,12 +25,6 @@ pipeline {
             }
         }
 
-        stage('Проверка наличия файлов конфигурации') {
-            steps {
-                bat 'if exist src\\Configuration.xml (echo OK) else (echo ERROR: src\\Configuration.xml not found && exit /b 1)'
-            }
-        }
-
         stage('Загрузка конфигурации') {
             options { timeout(time: 10, unit: 'MINUTES') }
             steps {
@@ -38,24 +32,19 @@ pipeline {
             }
         }
 
-        stage('Проверка наличия тестов') {
-            steps {
-                bat 'if not exist tools\\vanessa-automation.epf (echo ERROR: vanessa-automation.epf not found && exit /b 1)'
-                bat 'if not exist features (echo ERROR: features folder not found && exit /b 1)'
-            }
-        }
-
         stage('Автотесты (Vanessa Automation)') {
             options { timeout(time: 15, unit: 'MINUTES') }
             steps {
-                bat "vanessa-runner run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
+                // Прямой вызов runner.os через oscript (без vanessa-runner.bat)
+                bat "oscript \"%USERPROFILE%\\Documents\\OneScript\\lib\\vanessa-runner\\src\\runner.os\" run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: '*.log, reports/*.json, reports/*.xml, build\\ib\\*.cfl', allowEmptyArchive: true
+            // Архивируем все логи и отчёты (HTML Publisher не используется)
+            archiveArtifacts artifacts: '*.log, reports/**/*, build\\ib\\*.cfl', allowEmptyArchive: true
         }
         failure {
             echo 'Сборка не удалась. Логи и отчёты сохранены в архиве.'

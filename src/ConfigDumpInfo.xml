@@ -208,7 +208,7 @@
 			<Metadata name="Document.Оплата.TabularSection.СводнаяТаблица.Attribute.СуммаПлан" id="d5c479c5-0931-4fb2-8b5b-852929ee5dec"/>
 			<Metadata name="Document.Оплата.TabularSection.СводнаяТаблица.Attribute.План" id="e1b5f2dd-b68d-4d53-99c5-694279f9a395"/>
 		</Metadata>
-		<Metadata name="Document.Посещаемость" id="7aefbfbb-b86d-4e27-98e0-cd5ccd8e7bd3" configVersion="a1c30c0398e3ae498c085d74ad81ea6900000000">
+		<Metadata name="Document.Посещаемость" id="7aefbfbb-b86d-4e27-98e0-cd5ccd8e7bd3" configVersion="5960a56e6c66cb4db497b7fc20c38eef00000000">
 			<Metadata name="Document.Посещаемость.Attribute.ИтогоВГруппе" id="026fa299-5a1b-48a7-99c0-2813def6d8d6"/>
 			<Metadata name="Document.Посещаемость.TabularSection.Студенты.Attribute.ПоследовательностьИЛогикаИзложенияМатериала" id="164fcb45-26e2-4387-90f3-4863d5f3dd3d"/>
 			<Metadata name="Document.Посещаемость.TabularSection.Студенты.Attribute.ОценкаН" id="19cfb9fd-9d18-40ed-a79d-8a16539cb49c"/>
@@ -223,6 +223,7 @@
 			<Metadata name="Document.Посещаемость.Attribute.Комментарий" id="46034863-4945-4527-b8db-65bf63c6960e"/>
 			<Metadata name="Document.Посещаемость.Attribute.СколькоПришлоСтудентов" id="4a5f5795-51dd-4db9-9e95-aa24e6a2c2d5"/>
 			<Metadata name="Document.Посещаемость.Attribute.НеПодаватьВОтчет" id="4f2e9d38-7c7f-44f1-af95-747e9219afb6"/>
+			<Metadata name="Document.Посещаемость.Attribute.Оплата" id="5007b303-1be6-4525-9f9a-2c82905da3cf"/>
 			<Metadata name="Document.Посещаемость.Attribute.ПланПоЧасам" id="5c513993-cbba-4544-ae31-d99315169ae7"/>
 			<Metadata name="Document.Посещаемость.TabularSection.Студенты.Attribute.СтепеньРаскрытияТемы" id="687a0ee4-637d-4cb0-b0ed-653e1a309359"/>
 			<Metadata name="Document.Посещаемость.TabularSection.Студенты.Attribute.Баллов" id="6a7f45af-9478-4d1c-9ce3-b9fc98c342fd"/>

@@ -36,7 +36,7 @@
 		<Metadata name="CommonModule.МодульРЗСервВнешСоед.Module" id="4ec8f0e0-33de-41a6-a8d8-0cd8ecb68188.0" configVersion="9ba24ed7a7d82f4eab8afc5bc0eb844600000000"/>
 		<Metadata name="CommonModule.МодульЭкспортаСервер" id="352ebf84-ba17-4da3-9fb3-fd93981058b6" configVersion="d09942757f4f374fa356dea7af82c62600000000"/>
 		<Metadata name="CommonModule.МодульЭкспортаСервер.Module" id="352ebf84-ba17-4da3-9fb3-fd93981058b6.0" configVersion="dfbf93246aab5c48beb6dcaaa34176f700000000"/>
-		<Metadata name="Configuration.УчетСтудентов" id="a1e4785b-cfa2-4968-b490-37a87b021fb5" configVersion="55c641f61e911541aadd007d292fcdf400000000"/>
+		<Metadata name="Configuration.УчетСтудентов" id="a1e4785b-cfa2-4968-b490-37a87b021fb5" configVersion="7187fefedeba4347b29071d24c45b58a00000000"/>
 		<Metadata name="Configuration.УчетСтудентов.ManagedApplicationModule" id="f238b93f-e3b2-4b5a-baa9-688c002c9058.6" configVersion="7d98d372d797854aa5da1ee44c3a703000000000"/>
 		<Metadata name="Configuration.УчетСтудентов.SessionModule" id="f238b93f-e3b2-4b5a-baa9-688c002c9058.7" configVersion="781a0ced67924c40a2bb06337d57aaa700000000"/>
 		<Metadata name="Constant.ПутьКФайлу" id="a7c2e8f9-40f2-4e8a-a7d6-d57b24e7fca5" configVersion="3e027f390bba6c47968fbc86f45008f700000000"/>

@@ -4,11 +4,12 @@ pipeline {
     options {
         timeout(time: 30, unit: 'MINUTES')
     }
+
     environment {
         V8_PATH = "C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe"
         EMPTY_IB = "C:\\empty_ib"
-        VRUNNER = "C:\\Program Files\\OneScript\\bin\\vrunner.bat"
     }
+
     stages {
         stage('Checkout') {
             steps {
@@ -28,7 +29,7 @@ pipeline {
                         credentialsId: 'd3c27826-bab6-4b11-a02b-834a742b8601'
                     ]]
                 ])
-            ]
+            }
         }
 
         stage('Очистка') {
@@ -64,7 +65,7 @@ pipeline {
             steps {
                 bat '''
                     chcp 65001
-                    "C:\\Program Files\\OneScript\\bin\\vrunner.bat" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
+                    oscript "C:\\Program Files\\OneScript\\lib\\vanessa-runner\\src\\runner.os" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
                 '''
             }
         }

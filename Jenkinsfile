@@ -36,7 +36,7 @@ pipeline {
             options { timeout(time: 15, unit: 'MINUTES') }
             steps {
                 // Прямой вызов runner.os через oscript (без vanessa-runner.bat)
-                bat "oscript \"%USERPROFILE%\\Documents\\OneScript\\lib\\vanessa-runner\\src\\runner.os\" run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
+                bat "oscript \"C:\\Program Files\\OneScript\\lib\\vanessa-runner\\src\\runner.os\" run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
             }
         }
     }

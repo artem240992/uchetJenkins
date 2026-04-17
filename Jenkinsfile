@@ -43,7 +43,7 @@ pipeline {
         stage('Автотесты (Vanessa Automation)') {
     options { timeout(time: 15, unit: 'MINUTES') }
     steps {
-        bat "oscript \"%WORKSPACE%\\tools\\vanessa-runner\\src\\runner.os\" run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
+        bat "oscript \"%WORKSPACE%\\tools\\vanessa-runner\\tools\\runner.os\" run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
             }
         }  
     }

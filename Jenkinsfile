@@ -1,5 +1,3 @@
-// @Library('vanessa_usher_local') _
-
 pipeline {
     agent any
 
@@ -19,30 +17,41 @@ pipeline {
                 checkout([
                     $class: 'GitSCM',
                     branches: [[name: '*/main']],
-                    extensions: [[$class: 'SubmoduleOption', disableSubmodules: true]],
-                    userRemoteConfigs: [[url: 'https://github.com/artem240992/uchetJenkins', credentialsId: 'd3c27826-bab6-4b11-a02b-834a742b8601']]
+                    extensions: [[
+                        $class: 'SubmoduleOption',
+                        disableSubmodules: true
+                    ]],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/artem240992/uchetJenkins',
+                        credentialsId: 'd3c27826-bab6-4b11-a02b-834a742b8601'
+                    ]]
                 ])
             }
         }
 
         stage('Подготовка тестовой ИБ') {
             steps {
-                // Создаём базу из шаблона или через команду библиотеки
+                bat 'if exist build\\ib rmdir /s /q build\\ib'
+                bat 'mkdir build\\ib'
                 bat "xcopy /E /I /Y \"${env.EMPTY_IB}\" \"%WORKSPACE%\\build\\ib\""
             }
         }
 
         stage('Загрузка конфигурации') {
+            options { timeout(time: 10, unit: 'MINUTES') }
             steps {
-                // Используем метод библиотеки для загрузки конфигурации из папки src
-                loadConfigFromPath("${WORKSPACE}\\src")
+                bat "\"${env.V8_PATH}\" DESIGNER /F \"%WORKSPACE%\\build\\ib\" /LoadConfigFromFiles \"%WORKSPACE%\\src\" /UpdateDBCfg /Out \"%WORKSPACE%\\load.log\""
             }
         }
 
         stage('Запуск автотестов') {
+            options { timeout(time: 15, unit: 'MINUTES') }
             steps {
-                // Запуск тестов через библиотеку
-                runVanessaTests(featuresPath: "${WORKSPACE}\\features", vanessaPath: "${WORKSPACE}\\tools\\vanessa-automation.epf")
+                bat '''
+                    chcp 65001
+                    set OSCRIPT_LIBPATH=%WORKSPACE%\\tools\\libs
+                    oscript "%WORKSPACE%\\tools\\vanessa-runner\\tools\\runner.os" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
+                '''
             }
         }
     }
@@ -51,6 +60,8 @@ pipeline {
         always {
             archiveArtifacts artifacts: '*.log, reports/**/*, build\\ib\\*.cfl', allowEmptyArchive: true
         }
-        failure { echo 'Сборка не удалась.' }
+        failure {
+            echo 'Сборка не удалась. Логи и отчёты сохранены в архиве.'
+        }
     }
 }

@@ -1,2 +1,12 @@
 @Library('jenkins-lib') _
-pipeline1C()
+node {
+    stage('Создать базу') {
+        createInfobase()
+    }
+    stage('Загрузить конфигурацию') {
+        initFromFiles()
+    }
+    stage('Запустить проверки') {
+        start()   // или yaxunit(), smoke() и т.д.
+    }
+}

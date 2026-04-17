@@ -1,21 +1,44 @@
 pipeline {
     agent any
+
+    environment {
+        V8_PATH = "C:\\Program Files\\1cv8\\8.3.27.1786\\bin\\1cv8.exe"
+        EMPTY_IB = "C:\\empty_ib"   // путь к пустой базе-шаблону
+    }
+
     stages {
-        stage('Установка зависимостей') {
+        stage('Очистка') {
             steps {
-                bat 'oscript -version' // проверка наличия OneScript
+                bat 'if exist build\\ib rmdir /s /q build\\ib'
+                bat 'mkdir build\\ib'
             }
         }
-        stage('Создание базы через Vanessa') {
+
+        stage('Копирование базы-шаблона') {
             steps {
-                bat 'vanessa-runner create-infobase --path ./build/ib'
-                bat 'vanessa-runner load-config --path ./build/ib --src ./src'
+                bat "xcopy /E /I /Y \"${env.EMPTY_IB}\" \"%WORKSPACE%\\build\\ib\""
             }
         }
-        stage('Проверка') {
+
+        stage('Загрузка конфигурации') {
             steps {
-                bat 'vanessa-runner run-tests --path ./build/ib'
+                bat "\"${env.V8_PATH}\" DESIGNER /F \"%WORKSPACE%\\build\\ib\" /LoadConfigFromFiles \"%WORKSPACE%\\src\" /UpdateDBCfg /Out \"%WORKSPACE%\\load.log\""
             }
+        }
+
+        stage('Проверка конфигурации') {
+            steps {
+                bat "\"${env.V8_PATH}\" DESIGNER /F \"%WORKSPACE%\\build\\ib\" /CheckConfig -ThinClient -Server -ExternalConnection /Out \"%WORKSPACE%\\check.log\""
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: '*.log, build\\ib\\*.cfl', allowEmptyArchive: true
+        }
+        failure {
+            echo 'Сборка не удалась. Логи в архиве.'
         }
     }
 }

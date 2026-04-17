@@ -3,6 +3,8 @@ pipeline {
 
     options {
         timeout(time: 30, unit: 'MINUTES')
+        // Отключаем автоматический checkout, чтобы сделать свой
+        skipDefaultCheckout()
     }
 
     environment {
@@ -18,11 +20,7 @@ pipeline {
                     branches: [[name: '*/main']],
                     extensions: [[
                         $class: 'SubmoduleOption',
-                        disableSubmodules: false,
-                        parentCredentials: true,
-                        recursiveSubmodules: true,
-                        reference: '',
-                        trackingSubmodules: false
+                        disableSubmodules: true   // ← отключаем подмодули
                     ]],
                     userRemoteConfigs: [[
                         url: 'https://github.com/artem240992/uchetJenkins',
@@ -65,7 +63,7 @@ pipeline {
             steps {
                 bat '''
                     chcp 65001
-                    oscript "C:\\Program Files\\OneScript\\lib\\vanessa-runner\\src\\runner.os" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
+                    oscript "%WORKSPACE%\\tools\\vanessa-runner\\tools\\runner.os" run --ibconnection "/F%WORKSPACE%\\build\\ib" --vanessa "%WORKSPACE%\\tools\\vanessa-automation.epf" --path "%WORKSPACE%\\features" --report-path "%WORKSPACE%\\reports"
                 '''
             }
         }

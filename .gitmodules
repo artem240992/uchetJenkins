@@ -1,0 +1,3 @@
+[submodule "tools/tools/vanessa-runner"]
+	path = tools/tools/vanessa-runner
+	url = https://github.com/vanessa-opensource/vanessa-runner.git

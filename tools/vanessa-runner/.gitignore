@@ -1,0 +1,19 @@
+# Файлы
+*.log
+*.ospx
+
+coverage/stat\.json
+
+bdd-exec\.xml
+
+*.epf
+
+**/ConfigDumpInfo.xml
+.vscode/launch.json
+
+# Каталоги
+build/
+oscript_modules/
+coverage/
+.scannerwork/
+allure-report/

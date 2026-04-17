@@ -41,12 +41,11 @@ pipeline {
         }
 
         stage('Автотесты (Vanessa Automation)') {
-            options { timeout(time: 15, unit: 'MINUTES') }
-            steps {
-                // Вызов vrunner.bat с правильным экранированием
-                bat "\"${env.VRUNNER}\" run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
+    options { timeout(time: 15, unit: 'MINUTES') }
+    steps {
+        bat "oscript \"%WORKSPACE%\\tools\\vanessa-runner\\src\\runner.os\" run --ibconnection \"/F%WORKSPACE%\\build\\ib\" --vanessa \"%WORKSPACE%\\tools\\vanessa-automation.epf\" --path \"%WORKSPACE%\\features\" --report-path \"%WORKSPACE%\\reports\""
             }
-        }
+        }  
     }
 
     post {
